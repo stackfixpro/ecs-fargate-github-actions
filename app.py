@@ -5,7 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 
 # Change this to "v2", commit, and watch GitHub Actions put it live on ECS.
-VERSION = "v1"
+VERSION = "v2"
 
 
 @app.get("/")
