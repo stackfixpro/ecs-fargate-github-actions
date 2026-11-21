@@ -24,7 +24,7 @@ git push -> GitHub Actions -> (OIDC, no keys) -> ECR -> ECS Fargate (2 tasks) ->
 
 | Thing | Name |
 |---|---|
-| Region | `us-east-1` (US East, N. Virginia) |
+| Region | `ap-southeast-2` (Asia Pacific, Sydney). Using another Region? Change it in `deploy.yml` and `aws/github-deploy-policy.json`. |
 | VPC | `stackfix-vpc` (10.0.0.0/16, 2 public subnets, no NAT Gateway) |
 | Security groups | `alb-sg` (port 80 from the internet), `app-sg` (port 8080 only from `alb-sg`) |
 | ECR repository | `stackfix-app` |
