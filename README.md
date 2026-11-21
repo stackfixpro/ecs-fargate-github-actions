@@ -29,7 +29,7 @@ git push -> GitHub Actions -> (OIDC, no keys) -> ECR -> ECS Fargate (2 tasks) ->
 | Security groups | `alb-sg` (port 80 from the internet), `app-sg` (port 8080 only from `alb-sg`) |
 | ECR repository | `stackfix-app` |
 | Target group / load balancer | `stackfix-tg` (IP targets, HTTP 8080, health check `/health`) / `stackfix-alb` |
-| ECS cluster / task definition / service | `stackfix-cluster` / `stackfix-task` (container `app`, 0.25 vCPU, 0.5 GB) / `stackfix-service` (2 tasks) |
+| ECS cluster / task definition / service | `stackfix-cluster` / `stackfix-task` (container `app`, 0.25 vCPU, 0.5 GB) / `stackfix-task-service-vjzck4yr` (2 tasks; the console added the ending) |
 | IAM role for GitHub | `github-actions-deploy` with policy `github-deploy-ecs` |
 
 ## Steps (short version)
@@ -40,7 +40,7 @@ git push -> GitHub Actions -> (OIDC, no keys) -> ECR -> ECS Fargate (2 tasks) ->
 3. **Load balancer:** target group `stackfix-tg` (type IP, port 8080, health check `/health`, no targets),
    then the ALB `stackfix-alb` (internet-facing, both public subnets, `alb-sg`, listener HTTP 80 -> `stackfix-tg`).
 4. **ECS:** cluster `stackfix-cluster` (Fargate), task definition `stackfix-task` (image `...stackfix-app:latest`,
-   port 8080), service `stackfix-service` (2 tasks, public subnets, **public IP ON**, `app-sg`, existing ALB + target group,
+   port 8080), service `stackfix-task-service-vjzck4yr` (2 tasks, public subnets, **public IP ON**, `app-sg`, existing ALB + target group,
    circuit breaker with rollback). Open the ALB's DNS name.
 5. **OIDC:** IAM -> Identity providers -> OpenID Connect: `https://token.actions.githubusercontent.com`, audience
    `sts.amazonaws.com`. Create policy `github-deploy-ecs` from `aws/github-deploy-policy.json` (replace `ACCOUNT_ID`),
